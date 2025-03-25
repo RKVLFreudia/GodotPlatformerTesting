@@ -44,7 +44,7 @@ func set_offset() -> Vector2:
 	if sprite.flip_h:
 		new_offset.x = -43
 	
-	if not state_owner.is_on_floor():
-		new_offset.y = 20
+	#if not state_owner.is_on_floor():
+		#new_offset.y = 20
 		
 	return new_offset

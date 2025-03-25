@@ -9,7 +9,7 @@ const JUMP_OFFSET := Vector2(0, 20)
 @export var state_idle : State
 
 func on_enter():
-	animation_tree.travel("Walk")
+	animation_tree.travel("Sprint")
 	
 func on_exit():
 	pass
@@ -41,7 +41,7 @@ func set_offset() -> Vector2:
 	if sprite.flip_h:
 		new_offset.x = -43
 	
-	if not state_owner.is_on_floor():
-		new_offset.y = 20
+	#if not state_owner.is_on_floor():
+		#new_offset.y = 20
 		
 	return new_offset

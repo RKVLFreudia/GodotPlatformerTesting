@@ -8,7 +8,7 @@ class_name StateMachine extends Node
 @export var default_state : State
 var current_state : State
 
-const COMBO_TIMEOUT = 0.15
+const COMBO_TIMEOUT = 0.2
 const MAX_COMBO_CHAIN = 2
 
 var last_key_delta = 0
