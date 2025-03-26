@@ -4,11 +4,11 @@ extends State
 @export var jump_state : State
 
 func on_enter():
-	animation_tree.travel("Idle")
+	state_machine.sm_owner.animation_tree.travel("Idle")
 	
 func on_fixed_update(delta: float):
 	super(delta)
-	state_owner.move_and_slide()
+	state_machine.sm_owner.characterbody2d.move_and_slide()
 	
 	if not Input.get_axis("move_left", "move_right") == 0:
 		state_machine.enter_state(walk_state)

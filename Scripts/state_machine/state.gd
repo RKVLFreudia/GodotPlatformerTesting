@@ -1,22 +1,21 @@
 class_name State extends Node
 
+@export var state_name : String
 var state_machine : StateMachine
-var state_owner : CharacterBody2D
-var animation_tree : AnimationNodeStateMachinePlayback
 
-# Executed once on entering the node
+## Executed once on entering the state
 func on_enter() -> void:
 	pass
 	
-# Executed once on exiting the node
+## Executed once on exiting the state
 func on_exit() -> void:
 	pass
 	
-# Executed every process
+## Executed every process
 func on_update(delta: float) -> void:
 	pass
 	
-# Executed every physics_process
+## Executed every physics_process
 func on_fixed_update(delta: float) -> void:
-	if not state_owner.is_on_floor():
-		state_owner.velocity += state_owner.get_gravity() * delta
+	if not state_machine.sm_owner.characterbody2d.is_on_floor():
+		state_machine.sm_owner.characterbody2d.velocity += state_machine.sm_owner.characterbody2d.get_gravity() * delta

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://blmayrnj1aeg6"]
 
 [ext_resource type="Texture2D" uid="uid://dpoicvjhbfn7u" path="res://Sprites/world_tileset.png" id="1_y5h4o"]
-[ext_resource type="PackedScene" uid="uid://8frng1r536dy" path="res://playerNew.tscn" id="2_y5h4o"]
+[ext_resource type="PackedScene" uid="uid://8frng1r536dy" path="res://Scenes/playerNew.tscn" id="2_y5h4o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ofo5m"]
 texture = ExtResource("1_y5h4o")
@@ -71,6 +71,6 @@ tile_map_data = PackedByteArray("AADe/w4AAAAIAAEAAADf/w4AAAAIAAEAAADg/w4AAAAIAAE
 tile_set = SubResource("TileSet_qe1ui")
 
 [node name="PlayerNew" parent="." instance=ExtResource("2_y5h4o")]
-position = Vector2(-464, -32)
+position = Vector2(-522, 35)
 
 [node name="Camera2D" type="Camera2D" parent="PlayerNew"]
