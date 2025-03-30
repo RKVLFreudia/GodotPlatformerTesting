@@ -3,18 +3,9 @@ extends State
 @export var idle_state : State
 @export var walk_state : State
 @export var sprint_state : State
-@export var falling_state : State
 
-signal on_jump
-
-func on_enter() -> void:
-	player.animation_tree.travel("Jump_entry")
-	
-func on_exit() -> void:
-	if state_machine.last_state == walk_state:
-		state_machine.last_state = walk_state
-	elif state_machine.last_state == sprint_state:
-		state_machine.last_state = sprint_state
+func on_enter():
+	player.animation_tree.travel("jump_falling")
 	
 func on_fixed_update(delta: float) -> void:
 	super(delta)
@@ -29,11 +20,12 @@ func on_fixed_update(delta: float) -> void:
 	else:
 		player.characterbody2d.velocity.x = move_toward(player.characterbody2d.velocity.x, 0,
 			player.last_target_speed)
-		
-	player.characterbody2d.move_and_slide()
 	
-	if player.characterbody2d.velocity.y > 0:
-		state_machine.enter_state(falling_state)
+	player.characterbody2d.move_and_slide()
+
+	if player.characterbody2d.is_on_floor():
+		player.animation_tree.travel("jump_exit")
 		
-func _on_jump() -> void:
-	player.characterbody2d.velocity.y = player.JUMP_VELOCITY
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "jump_exit":
+		state_machine.enter_state(idle_state)

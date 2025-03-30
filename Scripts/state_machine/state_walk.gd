@@ -5,6 +5,9 @@ extends State
 
 func on_enter() -> void:
 	player.animation_tree.travel("Walk")
+	
+func on_exit() -> void:
+	player.last_target_speed = player.WALK_SPEED
 
 func on_fixed_update(delta: float) -> void:
 	super(delta)
@@ -17,12 +20,13 @@ func on_fixed_update(delta: float) -> void:
 	elif direction > 0: player.set_flip_h(false)
 	
 	if direction:
-		player.characterbody2d.velocity.x = player.WALK_SPEED * direction
+		player.characterbody2d.velocity.x = move_toward(player.characterbody2d.velocity.x, 
+				player.WALK_SPEED * direction, player.WALK_ACCELERATION)
 	elif direction == 0:
-		player.characterbody2d.velocity.x = move_toward(player.characterbody2d.velocity.x, 0.0,
-				player.WALK_SPEED)
+		player.characterbody2d.velocity.x = move_toward(player.characterbody2d.velocity.x,
+			0.0, player.WALK_DECCELERATION)
 		
-	if direction == 0 and player.characterbody2d.is_on_floor():
+	if player.characterbody2d.velocity.x == 0 and player.characterbody2d.is_on_floor():
 		state_machine.enter_state(idle_state)
 		
 	if Input.is_action_pressed("jump"):

@@ -12,10 +12,10 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and !event.is_echo():
-		if event.device == last_key_pressed and current_elapsed_time >= 0:
-			#print("Double Tap")
+		if event.keycode == last_key_pressed and current_elapsed_time >= 0:
 			is_double_tap = true
 		else:
+			last_key_pressed = event.keycode
 			is_double_tap = false
-			last_key_pressed = event.device
+			
 		current_elapsed_time = MAX_DOUBLE_TAP_WINDOW

@@ -3,10 +3,10 @@ class_name StateMachine extends Node
 @export var sm_owner : Player
 @export var default_state : State
 @export var input_controller : InputController
+
+var last_state : State
 var current_state : State
 #var states : Dictionary[String, State]
-
-
 
 func _ready() -> void:
 	await sm_owner.ready # Waits for the parent's script to be ready
@@ -31,18 +31,16 @@ func _ready() -> void:
 func enter_state(new_state: State) -> void:
 	if current_state:
 		current_state.on_exit()
-		
+		last_state = current_state
+	
 	new_state.on_enter()
 	current_state = new_state
 	
 func _process(delta: float) -> void:
-	sm_owner.state_label.text = "State: " + current_state.state_name
-	
 	if current_state != null:
 		current_state.on_update(delta)
 		
 func _physics_process(delta: float) -> void:
-	
 	if current_state != null:
 		current_state.on_fixed_update(delta)
 		
