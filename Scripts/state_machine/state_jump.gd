@@ -10,16 +10,11 @@ signal on_jump
 func on_enter() -> void:
 	player.animation_tree.travel("Jump_entry")
 	
-func on_exit() -> void:
-	if state_machine.last_state == walk_state:
-		state_machine.last_state = walk_state
-	elif state_machine.last_state == sprint_state:
-		state_machine.last_state = sprint_state
-	
 func on_fixed_update(delta: float) -> void:
 	super(delta)
 	
 	var direction : int = Input.get_axis("move_left", "move_right")
+	player.last_target_direction = direction
 	
 	if direction < 0: player.set_flip_h(true)
 	elif direction > 0: player.set_flip_h(false)

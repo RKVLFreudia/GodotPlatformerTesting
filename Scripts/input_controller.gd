@@ -19,3 +19,6 @@ func _input(event: InputEvent) -> void:
 			is_double_tap = false
 			
 		current_elapsed_time = MAX_DOUBLE_TAP_WINDOW
+		
+	#if event is InputEventKey and event.is_released():
+		#if is_double_tap: is_double_tap = false

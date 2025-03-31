@@ -6,6 +6,7 @@ extends State
 
 func on_enter():
 	player.animation_tree.travel("Idle")
+	player.is_running = false
 	
 func on_fixed_update(delta: float):
 	super(delta)

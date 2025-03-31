@@ -3,14 +3,19 @@ class_name Player extends Node
 # Base stats
 const WALK_SPEED : float = 300.0
 const SPRINT_SPEED_MULT : float = 1.6
+const SLIDE_STRENGTH : float = 1000.0
 
 const JUMP_VELOCITY : float = -550.0
 
 const WALK_ACCELERATION : float = 10.0
 const SPRINT_ACCELERATION : float = 50.0
 
-const WALK_DECCELERATION : float = 50.0
-const SPRINT_DECCELERATION : float = 75.0
+const WALK_DECCELERATION : float = 75.0
+const SPRINT_DECCELERATION : float = 100.0
+const SLIDE_DECCELERATION : float = 10.0
+const SLIDE_DECCELERATION_STRONG : float = 15.0
+
+const SLIDE_CUT_OFF : float = 300.0
 
 # AERIAL =====================
 const WALK_AERIAL_SPEED : float = 250.0
@@ -18,6 +23,8 @@ const SPRINT_AERIAL_SPEED : float = 350.0
 
 # TEST ======================
 var last_target_speed : float = 0.0
+var last_target_direction: int = 0
+var is_running : bool = false
 
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var animation_tree : AnimationNodeStateMachinePlayback = \
@@ -33,6 +40,7 @@ const FLIP_OFFSET_H := Vector2(-43, 0)
 @export var h_velocity_label : Label
 @export var v_velocity_label : Label
 @export var last_registered_tap_detection : Label
+@export var prev_state : Label
 
 func set_flip_h(do_flip: bool) -> void:
 	if do_flip:
@@ -53,5 +61,7 @@ func _process(delta: float) -> void:
 		v_velocity_label.text = "Y Speed: " + str(roundf(characterbody2d.velocity.y))
 	if last_registered_tap_detection: 
 		last_registered_tap_detection.text = "Last Key Tap: " + str(state_machine.input_controller.last_key_pressed)
+	if prev_state:
+		prev_state.text = "Previous State: " + state_machine.last_state.state_name if state_machine.last_state else "Null"
 
 # ======================
