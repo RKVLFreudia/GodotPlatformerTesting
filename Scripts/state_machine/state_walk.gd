@@ -6,7 +6,7 @@ extends State
 
 
 func on_enter() -> void:
-	player.animation_tree.travel("Walk")
+	player.animation_controller.request_travel(player.animation_controller.AnimationType.WALK)
 	
 func on_exit() -> void:
 	player.last_target_speed = player.WALK_SPEED

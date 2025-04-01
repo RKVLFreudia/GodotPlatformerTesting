@@ -8,7 +8,7 @@ extends State
 var does_strong_decceleration : bool = false
 
 func on_enter() -> void:
-	player.animation_tree.travel("Slide")
+	player.animation_controller.request_travel(player.animation_controller.AnimationType.SLIDE)
 	player.characterbody2d.velocity.x = player.SLIDE_STRENGTH * player.last_target_direction
 
 func on_fixed_update(delta: float) -> void:

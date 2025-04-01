@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://8frng1r536dy"]
+[gd_scene load_steps=68 format=3 uid="uid://8frng1r536dy"]
 
 [ext_resource type="Script" uid="uid://bdhxlnnayvg38" path="res://Scripts/player.gd" id="1_rsbax"]
 [ext_resource type="Texture2D" uid="uid://dh7d3mt2iegvv" path="res://Sprites/B Type/000.png" id="2_ja6mw"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://d3haw6ho4duuh" path="res://Sprites/B Type/098.png" id="26_6hxw1"]
 [ext_resource type="Texture2D" uid="uid://brs5b3s304ci8" path="res://Sprites/B Type/082.png" id="26_g3fqa"]
 [ext_resource type="Texture2D" uid="uid://c33wtwaf04kpy" path="res://Sprites/B Type/083.png" id="27_kgl47"]
+[ext_resource type="Script" uid="uid://chw4ffjokuuch" path="res://Scripts/animation_controller.gd" id="28_kgl47"]
 [ext_resource type="Script" uid="uid://ck34qvpi5lg8f" path="res://Scripts/state_machine/state_falling.gd" id="33_jocl5"]
 [ext_resource type="Script" uid="uid://yh1hscv8uwgu" path="res://Scripts/state_machine/state_slide.gd" id="33_w8gle"]
 
@@ -71,7 +72,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_8ewil"]
 resource_name = "Jump_entry"
-length = 0.2
+length = 0.1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -80,15 +81,15 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("21_jocl5"), ExtResource("22_w8gle"), ExtResource("12_krsnw")]
+"values": [ExtResource("21_jocl5"), ExtResource("22_w8gle")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("State_Machine/Jump")
+tracks/1/path = NodePath("State_Machine/StateJump")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -125,6 +126,24 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [128.0]
+}
+
+[sub_resource type="Animation" id="Animation_6hxw1"]
+resource_name = "Slide"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("26_g3fqa"), ExtResource("27_kgl47")]
 }
 
 [sub_resource type="Animation" id="Animation_uyn16"]
@@ -194,24 +213,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_tan1f"]
 resource_name = "jump_falling"
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("24_g3fqa")]
-}
-
-[sub_resource type="Animation" id="Animation_6hxw1"]
-resource_name = "Slide"
-length = 0.2
-loop_mode = 1
+length = 0.1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -223,7 +225,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("26_g3fqa"), ExtResource("27_kgl47")]
+"values": [ExtResource("12_krsnw"), ExtResource("24_g3fqa")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_you1h"]
@@ -284,12 +286,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7x0tw"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kgl47"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_pi1as"]
 states/End/position = Vector2(841.333, 72)
 states/Idle/node = SubResource("AnimationNodeAnimation_b2lab")
 states/Idle/position = Vector2(402.667, 102)
 states/Jump_entry/node = SubResource("AnimationNodeAnimation_d25cj")
-states/Jump_entry/position = Vector2(288.666, -28)
+states/Jump_entry/position = Vector2(513.999, -18.6667)
 states/Slide/node = SubResource("AnimationNodeAnimation_lwew2")
 states/Slide/position = Vector2(461.667, 211.782)
 states/Sprint/node = SubResource("AnimationNodeAnimation_krsnw")
@@ -297,15 +301,16 @@ states/Sprint/position = Vector2(331.334, 211.42)
 states/Walk/node = SubResource("AnimationNodeAnimation_s2ewu")
 states/Walk/position = Vector2(572.666, 99.7312)
 states/jump_exit/node = SubResource("AnimationNodeAnimation_fl0bj")
-states/jump_exit/position = Vector2(513, -26.6049)
+states/jump_exit/position = Vector2(775.667, -37.2716)
 states/jump_falling/node = SubResource("AnimationNodeAnimation_jocl5")
-states/jump_falling/position = Vector2(402.556, -88.3333)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0uaq6"), "Idle", "Jump_entry", SubResource("AnimationNodeStateMachineTransition_8ewil"), "Jump_entry", "Idle", SubResource("AnimationNodeStateMachineTransition_5msv0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_ja6mw"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_38bph"), "Sprint", "Idle", SubResource("AnimationNodeStateMachineTransition_0ty4k"), "jump_exit", "Idle", SubResource("AnimationNodeStateMachineTransition_l2t71"), "Idle", "Sprint", SubResource("AnimationNodeStateMachineTransition_hl4rp"), "Jump_entry", "jump_falling", SubResource("AnimationNodeStateMachineTransition_w8gle"), "jump_falling", "jump_exit", SubResource("AnimationNodeStateMachineTransition_g3fqa"), "Sprint", "Slide", SubResource("AnimationNodeStateMachineTransition_fl0bj"), "Slide", "Idle", SubResource("AnimationNodeStateMachineTransition_7x0tw")]
-graph_offset = Vector2(-73, 39)
+states/jump_falling/position = Vector2(633.223, -77.6666)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0uaq6"), "Idle", "Jump_entry", SubResource("AnimationNodeStateMachineTransition_8ewil"), "Jump_entry", "Idle", SubResource("AnimationNodeStateMachineTransition_5msv0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_ja6mw"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_38bph"), "Sprint", "Idle", SubResource("AnimationNodeStateMachineTransition_0ty4k"), "jump_exit", "Idle", SubResource("AnimationNodeStateMachineTransition_l2t71"), "Idle", "Sprint", SubResource("AnimationNodeStateMachineTransition_hl4rp"), "Jump_entry", "jump_falling", SubResource("AnimationNodeStateMachineTransition_w8gle"), "jump_falling", "jump_exit", SubResource("AnimationNodeStateMachineTransition_g3fqa"), "Sprint", "Slide", SubResource("AnimationNodeStateMachineTransition_fl0bj"), "Slide", "Idle", SubResource("AnimationNodeStateMachineTransition_7x0tw"), "Walk", "Jump_entry", SubResource("AnimationNodeStateMachineTransition_kgl47")]
+graph_offset = Vector2(91, -115)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "sprite", "state_label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "animation_controller", "sprite", "state_label")]
 script = ExtResource("1_rsbax")
 state_machine = NodePath("State_Machine")
+animation_controller = NodePath("AnimationController")
 sprite = NodePath("Sprite2D")
 state_label = NodePath("CURRENT_STATE")
 
@@ -334,59 +339,63 @@ autoplay = "Idle"
 tree_root = SubResource("AnimationNodeStateMachine_pi1as")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="Input_Controler" type="Node" parent="."]
+[node name="AnimationController" type="Node" parent="."]
+script = ExtResource("28_kgl47")
+
+[node name="InputControler" type="Node" parent="."]
 script = ExtResource("21_53lnm")
 
 [node name="State_Machine" type="Node" parent="." node_paths=PackedStringArray("sm_owner", "default_state", "input_controller")]
 script = ExtResource("14_b2lab")
 sm_owner = NodePath("..")
-default_state = NodePath("Idle")
-input_controller = NodePath("../Input_Controler")
+default_state = NodePath("StateIdle")
+input_controller = NodePath("../InputControler")
 
-[node name="Idle" type="Node" parent="State_Machine" node_paths=PackedStringArray("walk_state", "jump_state", "sprint_state")]
+[node name="StateIdle" type="Node" parent="State_Machine" node_paths=PackedStringArray("walk_state", "jump_state", "sprint_state", "fall_state")]
 script = ExtResource("15_d25cj")
-walk_state = NodePath("../Walk")
-jump_state = NodePath("../Jump")
-sprint_state = NodePath("../Sprint")
+walk_state = NodePath("../StateWalk")
+jump_state = NodePath("../StateJump")
+sprint_state = NodePath("../StateSprint")
+fall_state = NodePath("../StateFall")
 state_name = "Idle"
 
-[node name="Walk" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "jump_state", "state_falling")]
+[node name="StateWalk" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "jump_state", "state_falling")]
 script = ExtResource("16_s2ewu")
-idle_state = NodePath("../Idle")
-jump_state = NodePath("../Jump")
-state_falling = NodePath("../Falling")
+idle_state = NodePath("../StateIdle")
+jump_state = NodePath("../StateJump")
+state_falling = NodePath("../StateFall")
 state_name = "Walk"
 
-[node name="Sprint" type="Node" parent="State_Machine" node_paths=PackedStringArray("state_idle", "jump_state", "state_slide", "state_falling")]
+[node name="StateSprint" type="Node" parent="State_Machine" node_paths=PackedStringArray("state_idle", "jump_state", "state_slide", "state_falling")]
 script = ExtResource("17_8ewil")
-state_idle = NodePath("../Idle")
-jump_state = NodePath("../Jump")
-state_slide = NodePath("../Slide")
-state_falling = NodePath("../Falling")
+state_idle = NodePath("../StateIdle")
+jump_state = NodePath("../StateJump")
+state_slide = NodePath("../StateSlide")
+state_falling = NodePath("../StateFall")
 state_name = "Sprint"
 
-[node name="Jump" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "walk_state", "sprint_state", "falling_state")]
-script = ExtResource("17_0uaq6")
-idle_state = NodePath("../Idle")
-walk_state = NodePath("../Walk")
-sprint_state = NodePath("../Sprint")
-falling_state = NodePath("../Falling")
-state_name = "Jump"
-
-[node name="Falling" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "walk_state", "sprint_state")]
-script = ExtResource("33_jocl5")
-idle_state = NodePath("../Idle")
-walk_state = NodePath("../Walk")
-sprint_state = NodePath("../Sprint")
-state_name = "Falling"
-
-[node name="Slide" type="Node" parent="State_Machine" node_paths=PackedStringArray("state_idle", "state_walk", "state_sprint", "state_jump")]
+[node name="StateSlide" type="Node" parent="State_Machine" node_paths=PackedStringArray("state_idle", "state_walk", "state_sprint", "state_jump")]
 script = ExtResource("33_w8gle")
-state_idle = NodePath("../Idle")
-state_walk = NodePath("../Walk")
-state_sprint = NodePath("../Sprint")
-state_jump = NodePath("../Jump")
+state_idle = NodePath("../StateIdle")
+state_walk = NodePath("../StateWalk")
+state_sprint = NodePath("../StateSprint")
+state_jump = NodePath("../StateJump")
 state_name = "Slide"
 
-[connection signal="animation_finished" from="AnimationTree" to="State_Machine/Falling" method="_on_animation_tree_animation_finished"]
-[connection signal="on_jump" from="State_Machine/Jump" to="State_Machine/Jump" method="_on_jump"]
+[node name="StateJump" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "walk_state", "sprint_state", "falling_state")]
+script = ExtResource("17_0uaq6")
+idle_state = NodePath("../StateIdle")
+walk_state = NodePath("../StateWalk")
+sprint_state = NodePath("../StateSprint")
+falling_state = NodePath("../StateFall")
+state_name = "Jump"
+
+[node name="StateFall" type="Node" parent="State_Machine" node_paths=PackedStringArray("idle_state", "walk_state", "sprint_state")]
+script = ExtResource("33_jocl5")
+idle_state = NodePath("../StateIdle")
+walk_state = NodePath("../StateWalk")
+sprint_state = NodePath("../StateSprint")
+state_name = "Falling"
+
+[connection signal="animation_finished" from="AnimationTree" to="AnimationController" method="_on_animation_tree_animation_finished"]
+[connection signal="on_jump" from="State_Machine/StateJump" to="State_Machine/StateJump" method="_on_jump"]

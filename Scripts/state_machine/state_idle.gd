@@ -3,9 +3,10 @@ extends State
 @export var walk_state : State
 @export var jump_state : State
 @export var sprint_state : State
+@export var fall_state : State
 
 func on_enter():
-	player.animation_tree.travel("Idle")
+	player.animation_controller.request_travel(player.animation_controller.AnimationType.IDLE)
 	player.is_running = false
 	
 func on_fixed_update(delta: float):

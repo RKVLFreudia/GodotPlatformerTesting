@@ -6,7 +6,8 @@ extends State
 @export var state_falling : State
 
 func on_enter():
-	player.animation_tree.travel("Sprint")
+	#player.animation_tree.travel("Sprint")
+	player.animation_controller.request_travel(player.animation_controller.AnimationType.SPRINT)
 	player.is_running = true
 	
 func on_exit():

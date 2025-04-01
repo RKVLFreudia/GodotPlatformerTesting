@@ -26,11 +26,10 @@ var last_target_speed : float = 0.0
 var last_target_direction: int = 0
 var is_running : bool = false
 
-@onready var animation_player : AnimationPlayer = $AnimationPlayer
-@onready var animation_tree : AnimationNodeStateMachinePlayback = \
-	$AnimationTree["parameters/playback"]
 @onready var characterbody2d : CharacterBody2D = $"."
 @export var state_machine : StateMachine
+
+@export var animation_controller : AnimationController
 
 # DEBUG ================
 const FLIP_OFFSET_H := Vector2(-43, 0)
@@ -60,7 +59,7 @@ func _process(delta: float) -> void:
 	if v_velocity_label: 
 		v_velocity_label.text = "Y Speed: " + str(roundf(characterbody2d.velocity.y))
 	if last_registered_tap_detection: 
-		last_registered_tap_detection.text = "Last Key Tap: " + str(state_machine.input_controller.last_key_pressed)
+		last_registered_tap_detection.text = "Last Key Tap: " + str(state_machine.input_controller.last_input)
 	if prev_state:
 		prev_state.text = "Previous State: " + state_machine.last_state.state_name if state_machine.last_state else "Null"
 

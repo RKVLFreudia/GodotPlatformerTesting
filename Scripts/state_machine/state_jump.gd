@@ -8,7 +8,7 @@ extends State
 signal on_jump
 
 func on_enter() -> void:
-	player.animation_tree.travel("Jump_entry")
+	player.animation_controller.request_travel(player.animation_controller.AnimationType.JUMP)
 	
 func on_fixed_update(delta: float) -> void:
 	super(delta)
@@ -26,6 +26,10 @@ func on_fixed_update(delta: float) -> void:
 			player.last_target_speed)
 		
 	player.characterbody2d.move_and_slide()
+	
+	if (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")) \
+		and state_machine.input_controller.is_double_tap:
+		player.is_running = true
 	
 	if player.characterbody2d.velocity.y > 0:
 		state_machine.enter_state(falling_state)
